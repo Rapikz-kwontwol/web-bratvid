@@ -3,37 +3,57 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Buat Stiker BRAT</title>
-  <style>
-    body { font-family: sans-serif; background: #f9f9f9; text-align: center; margin: 0; padding: 2em;}
-    .container { background: white; max-width: 400px; margin: 2em auto; padding: 2em; border-radius: 8px; box-shadow: 0 2px 12px #0001; }
-    input[type=text] { width: 80%; padding: 0.5em; font-size: 1em; }
-    button { padding: 0.5em 1em; font-size: 1em; margin-left: 0.5em; }
-    .result { margin-top: 2em; }
-    img { max-width: 200px; max-height: 200px; }
-  </style>
+  <title>Brat video generator</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-  <div class="container">
-    <h2>Buat Stiker BRAT</h2>
-    <input type="text" id="teks" placeholder="Masukkan teks..." />
-    <button onclick="buatStiker()">Buat Stiker</button>
-    <div class="result" id="hasil"></div>
+<body class="font-sans bg-gray-100 text-center py-8 px-4">
+  <div class="container bg-white max-w-md mx-auto p-8 rounded-lg shadow-lg">
+    <h2 class="text-2xl font-bold mb-6">Brat video generator</h2>
+    <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+      <input type="text" id="teks" placeholder="Masukkan teks..." class="flex-grow w-full sm:w-auto px-4 py-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+      <button onclick="buatStiker()" id="generateButton" class="px-6 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 ease-in-out">
+        Generate
+      </button>
+    </div>
+    <div class="result mt-8" id="hasil"></div>
   </div>
+
   <script>
     async function buatStiker() {
       const text = document.getElementById('teks').value.trim();
       const hasil = document.getElementById('hasil');
-      hasil.innerHTML = '';
-      if (!text) { hasil.innerHTML = '<span style="color:red">Teks tidak boleh kosong!</span>'; return; }
-      hasil.innerHTML = 'Mengambil stiker...';
+      const generateButton = document.getElementById('generateButton');
+
+      hasil.innerHTML = ''; // Bersihkan hasil sebelumnya
+
+      if (!text) {
+        hasil.innerHTML = '<span class="text-red-500">Teks tidak boleh kosong!</span>';
+        return;
+      }
+
+      // Tampilkan indikator loading dan nonaktifkan tombol
+      generateButton.disabled = true;
+      generateButton.classList.add('opacity-50', 'cursor-not-allowed');
+      hasil.innerHTML = `
+        <div class="flex items-center justify-center">
+          <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <span class="text-gray-700">Membuat video...</span>
+        </div>
+      `;
+
       try {
         const url = `https://skyzxu-brat.hf.space/brat-animated?text=${encodeURIComponent(text)}`;
-        // Karena endpoint mengembalikan file image, kita tampilkan langsung sebagai img
-        hasil.innerHTML = `<iframe src="${url}" width="300" height="300" scrolling="yes"
-            frameborder="0" allowfullscreen></iframe>`;
+        // Karena endpoint mengembalikan file image, kita tampilkan langsung sebagai iframe
+        hasil.innerHTML = `<iframe src="${url}" width="300" height="300" scrolling="yes" frameborder="0" allowfullscreen class="mx-auto rounded-md shadow-md"></iframe>`;
       } catch (e) {
-        hasil.innerHTML = `<span style="color:red">Terjadi error: ${e.message}</span>`;
+        hasil.innerHTML = `<span class="text-red-500">Terjadi error: ${e.message}</span>`;
+      } finally {
+        // Hentikan indikator loading dan aktifkan kembali tombol
+        generateButton.disabled = false;
+        generateButton.classList.remove('opacity-50', 'cursor-not-allowed');
       }
     }
   </script>
