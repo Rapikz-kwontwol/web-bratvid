@@ -30,7 +30,7 @@
       try {
         const url = `https://skyzxu-brat.hf.space/brat-animated?text=${encodeURIComponent(text)}`;
         // Karena endpoint mengembalikan file image, kita tampilkan langsung sebagai img
-        hasil.innerHTML = `<iframe src="${url}" width="100%" height="100%" scrolling="yes"
+        hasil.innerHTML = `<iframe src="${url}" width="100" height="100" scrolling="yes"
             frameborder="0" allowfullscreen></iframe>`;
       } catch (e) {
         hasil.innerHTML = `<span style="color:red">Terjadi error: ${e.message}</span>`;
