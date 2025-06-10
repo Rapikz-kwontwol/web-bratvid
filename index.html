@@ -1,119 +1,112 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Brat video generator</title>
-  <link rel="icon" type="image/x-icon" href="https://i.pinimg.com/736x/0d/71/2a/0d712a0b6805c0b44386339048bdfce5.jpg?format=png&name=900x900">
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Brat video generator</title>
+  <link rel="icon" type="image/x-icon" href="https://i.pinimg.com/736x/0d/71/2a/0d712a0b6805c0b44386339048bdfce5.jpg?format=png&name=900x900">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="font-sans bg-gray-100 text-center py-8 px-4">
-   <p align="center">
-        <img src="https://media.tenor.com/yWaLIc5J9WgAAAAj/momoi.gif" width="200" height="200" />
-    </p>
-  <div class="container bg-white max-w-md mx-auto p-8 rounded-lg shadow-lg">
-    <h2 class="text-2xl font-bold mb-6">Brat video generator by Rapikuzu</h2>
-    <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-      <input type="text" id="teks" placeholder="Masukkan teks..." class="flex-grow w-full sm:w-auto px-4 py-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
-      <button onclick="buatStiker()" id="generateButton" class="px-6 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 ease-in-out">
-        Generate
-      </button>
-      <button onclick="refreshPage()" class="px-6 py-2 bg-gray-300 text-gray-800 font-semibold rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 transition duration-200 ease-in-out">
-        Refresh
+   <p align="center">
+        <img src="https://media.tenor.com/yWaLIc5J9WgAAAAj/momoi.gif" width="200" height="200" />
+    </p>
+  <div class="container bg-white max-w-md mx-auto p-8 rounded-lg shadow-lg">
+    <h2 class="text-2xl font-bold mb-6">Brat video generator by Rapikuzu</h2>
+    <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+      <input type="text" id="teks" placeholder="Masukkan teks..." class="flex-grow w-full sm:w-auto px-4 py-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+      <button onclick="buatStiker()" id="generateButton" class="px-6 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 ease-in-out">
+        Generate
       </button>
-    </div>
-    <div class="result mt-8" id="hasil"></div>
-  </div>
+    </div>
+    <div class="result mt-8" id="hasil"></div>
+  </div>
 
-  <script>
-    async function buatStiker() {
-      const text = document.getElementById('teks').value.trim();
-      const hasil = document.getElementById('hasil');
-      const generateButton = document.getElementById('generateButton');
+  <script>
+    async function buatStiker() {
+      const text = document.getElementById('teks').value.trim();
+      const hasil = document.getElementById('hasil');
+      const generateButton = document.getElementById('generateButton');
 
-      hasil.innerHTML = ''; // Bersihkan hasil sebelumnya
+      hasil.innerHTML = ''; // Bersihkan hasil sebelumnya
 
-      if (!text) {
-        hasil.innerHTML = '<span class="text-red-500">Teks tidak boleh kosong!</span>';
-        return;
-      }
+      if (!text) {
+        hasil.innerHTML = '<span class="text-red-500">Teks tidak boleh kosong!</span>';
+        return;
+      }
 
-      // Tampilkan indikator loading dan nonaktifkan tombol
-      generateButton.disabled = true;
-      generateButton.classList.add('opacity-50', 'cursor-not-allowed');
-      hasil.innerHTML = `
-        <div class="flex items-center justify-center">
-          <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-          </svg>
-          <span class="text-gray-700">Membuat video...</span>
-        </div>
-      `;
+      // Tampilkan indikator loading dan nonaktifkan tombol
+      generateButton.disabled = true;
+      generateButton.classList.add('opacity-50', 'cursor-not-allowed');
+      hasil.innerHTML = `
+        <div class="flex items-center justify-center">
+          <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <span class="text-gray-700">Membuat video...</span>
+        </div>
+      `;
 
-      try {
-        const url = `https://skyzxu-brat.hf.space/brat-animated?text=${encodeURIComponent(text)}`;
-        // Karena endpoint mengembalikan file image, kita tampilkan langsung sebagai iframe
-        hasil.innerHTML = `<iframe src="${url}" width="300" height="300" scrolling="yes" frameborder="0" allowfullscreen class="mx-auto rounded-md shadow-md"></iframe>`;
-      } catch (e) {
-        hasil.innerHTML = `<span class="text-red-500">Terjadi error: ${e.message}</span>`;
-      } finally {
-        // Hentikan indikator loading dan aktifkan kembali tombol
-        generateButton.disabled = false;
-        generateButton.classList.remove('opacity-50', 'cursor-not-allowed');
-      }
-    }
-
-    function refreshPage() {
-      location.reload();
+      try {
+        const url = `https://skyzxu-brat.hf.space/brat-animated?text=${encodeURIComponent(text)}`;
+        // Karena endpoint mengembalikan file image, kita tampilkan langsung sebagai iframe
+        hasil.innerHTML = `<iframe src="${url}" width="300" height="300" scrolling="yes" frameborder="0" allowfullscreen class="mx-auto rounded-md shadow-md"></iframe>`;
+      } catch (e) {
+        hasil.innerHTML = `<span class="text-red-500">Terjadi error: ${e.message}</span>`;
+      } finally {
+        // Hentikan indikator loading dan aktifkan kembali tombol
+        generateButton.disabled = false;
+        generateButton.classList.remove('opacity-50', 'cursor-not-allowed');
+      }
     }
-  </script>
+  </script>
 </body>
-  <h2 class="text-xl font-bold border-b-2 border-gray-300 pb-2">SOCIAL MEDIA</h2>
-        <p>My Social media:</p>
-        <ul class="list-none pl-0">
-            <li class="inline-block mr-4">
-                <a href="https://t.me/rapikz"><img
-                            src="https://img.shields.io/badge/Telegram-00FFFF?style=for-the-badge&logo=telegram&logoColor=white"
-                            alt="Telegram"></a>
-            </li>
-            <li class="inline-block mr-4">
-                <a href="https://whatsapp.com/channel/0029VaoJb11LikgEpNpBty0e"><img
-                            src="https://img.shields.io/badge/WhatsApp Channel-25D366?style=for-the-badge&logo=whatsapp&logoColor=white&link=https://whatsapp.com/channel/0029VaoJb11LikgEpNpBty0e"
-                            alt="WhatsApp"></a>
-            </li>
-            <li class="inline-block mr-4">
-                <a href="https://www.instagram.com/rapik_gimang"><img
-                            src="https://img.shields.io/badge/Instagram-A020F0?style=for-the-badge&logo=instagram&logoColor=white"
-                            alt="Instagram"></a>
-            </li>
-            <li class="inline-block mr-4">
-                <a href="https://www.youtube.com/@rapikuzudesu"><img
-                            src="https://img.shields.io/badge/YouTube-ff0000?style=for-the-badge&logo=youtube&logoColor=ff000000&link=https://youtube.com/@sharescbyrapikzajah" alt="YouTube"></a>
-            </li>
-            <li class="inline-block mr-4">
-                <a href="https://github.com/Rapikz-kwontwol"><img title="Author"
-                            src="https://img.shields.io/badge/GITHUB-gray.svg?style=for-the-badge&logo=github"
-                            alt="GitHub"></a>
-            </li>
-        </ul>
-  <h2 class="text-xl font-bold border-b-2 border-gray-300 pb-2">THANKS TO</h2>
-        <p>Skyzxu:</p>
-        <ul class="list-none pl-0">
-            <li class="inline-block mr-4">
-                <a href="https://whatsapp.com/channel/0029Vafqv9YCnA7wYTSDOI3F"><img
-                            src="https://img.shields.io/badge/WhatsApp Channel Skyzxu-25D366?style=for-the-badge&logo=whatsapp&logoColor=white&link=https://whatsapp.com/channel/0029VaoJb11LikgEpNpBty0e"
-                            alt="WhatsApp"></a>
-            </li>
-            <li class="inline-block mr-4">
-                <a href="https://www.instagram.com/skyzxuu/"><img
-                            src="https://img.shields.io/badge/Instagram Skyzxu-A020F0?style=for-the-badge&logo=instagram&logoColor=white"
-                            alt="Instagram"></a>
-            </li>
-            <li class="inline-block mr-4">
-                <a href="https://github.com/skyzxuu"><img title="Author"
-                            src="https://img.shields.io/badge/GITHUB SKYZXU-gray.svg?style=for-the-badge&logo=github"
-                            alt="GitHub"></a>
-            </li>
-        </ul>
+  <h2 class="text-xl font-bold border-b-2 border-gray-300 pb-2">SOCIAL MEDIA</h2>
+        <p>My Social media:</p>
+        <ul class="list-none pl-0">
+            <li class="inline-block mr-4">
+                <a href="https://t.me/rapikz"><img
+                            src="https://img.shields.io/badge/Telegram-00FFFF?style=for-the-badge&logo=telegram&logoColor=white"
+                            alt="Telegram"></a>
+            </li>
+            <li class="inline-block mr-4">
+                <a href="https://whatsapp.com/channel/0029VaoJb11LikgEpNpBty0e"><img
+                            src="https://img.shields.io/badge/WhatsApp Channel-25D366?style=for-the-badge&logo=whatsapp&logoColor=white&link=https://whatsapp.com/channel/0029VaoJb11LikgEpNpBty0e"
+                            alt="WhatsApp"></a>
+            </li>
+            <li class="inline-block mr-4">
+                <a href="https://www.instagram.com/rapik_gimang"><img
+                            src="https://img.shields.io/badge/Instagram-A020F0?style=for-the-badge&logo=instagram&logoColor=white"
+                            alt="Instagram"></a>
+            </li>
+            <li class="inline-block mr-4">
+                <a href="https://www.youtube.com/@rapikuzudesu"><img
+                            src="https://img.shields.io/badge/YouTube-ff0000?style=for-the-badge&logo=youtube&logoColor=ff000000&link=https://youtube.com/@sharescbyrapikzajah" alt="YouTube"></a>
+            </li>
+            <li class="inline-block mr-4">
+                <a href="https://github.com/Rapikz-kwontwol"><img title="Author"
+                            src="https://img.shields.io/badge/GITHUB-gray.svg?style=for-the-badge&logo=github"
+                            alt="GitHub"></a>
+            </li>
+        </ul>
+  <h2 class="text-xl font-bold border-b-2 border-gray-300 pb-2">THANKS TO</h2>
+        <p>Skyzxu:</p>
+        <ul class="list-none pl-0">
+            <li class="inline-block mr-4">
+                <a href="https://whatsapp.com/channel/0029Vafqv9YCnA7wYTSDOI3F"><img
+                            src="https://img.shields.io/badge/WhatsApp Channel Skyzxu-25D366?style=for-the-badge&logo=whatsapp&logoColor=white&link=https://whatsapp.com/channel/0029VaoJb11LikgEpNpBty0e"
+                            alt="WhatsApp"></a>
+            </li>
+            <li class="inline-block mr-4">
+                <a href="https://www.instagram.com/skyzxuu/"><img
+                            src="https://img.shields.io/badge/Instagram Skyzxu-A020F0?style=for-the-badge&logo=instagram&logoColor=white"
+                            alt="Instagram"></a>
+            </li>
+            <li class="inline-block mr-4">
+                <a href="https://github.com/skyzxuu"><img title="Author"
+                            src="https://img.shields.io/badge/GITHUB SKYZXU-gray.svg?style=for-the-badge&logo=github"
+                            alt="GitHub"></a>
+            </li>
+        </ul>
 </html>
